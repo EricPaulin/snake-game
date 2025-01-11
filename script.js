@@ -17,10 +17,6 @@ let gameStarted = false
 
 
 /*
-    FEATURES
-    - Gameplay Loop (fix)
-    - Responsive Design
-
     FIX
     - Snake Shouldn't go Backwards
     - Button Controls
