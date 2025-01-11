@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    background-color: #9BBC0F;
+    
+}
+
+html, body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Title */
+
+.logo {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    bottom: 50%;
+}
+
+#prompt {
+    position: absolute;
+    color: #0f380f;
+    width: 180px;
+    height: 15px;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 12px;
+    bottom: 45%;
+}
+
+/* Scoreboard */
+
+.scores {
+    display: flex;
+    justify-content: space-between;
+}
+
+#score, 
+#high-score {
+    color: #0f380f;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+#high-score {
+    display: none;
+}
+
+
+/* Game Board */
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(20, 15px);
+    grid-template-rows: repeat(20, 15px);
+    border-radius: 100px;
+    margin: 5px;
+}
+
+.border1 {
+    border: #0f380f solid 10px;
+    box-shadow: inset 0 0 0 10px #0f380f;
+}
+
+.border2 {
+    border: #306230 solid 8px;
+    box-shadow: inset 0 0 0 8px #306230;
+}
+
+.border3 {
+    border: #8bac0f solid 5px;
+    box-shadow: inset 0 0 0 5px #8bac0f;
+}
+
+
+/* Contoller */
+
+.controller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.arrows {
+    display: flex;
+    align-items: center;
+}
+
+.arrows2 {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.arrows > img, 
+.arrows2 > img {
+    width: 60px;
+    cursor: pointer;
+}
+
+.btns > img {
+    width: 72px;
+    cursor: pointer;
+}
+
+.btns {
+    display: flex;
+}
+
+.btn1 {
+    margin-top: 50px;
+}
+
+.btn2 {
+    margin-bottom: 50px;
+}
+
+/* Snake */
+
+.snake {
+    background-color: #0f380f;
+    border: #0f380f 1px dotted;
+}
+
+.food {
+    background-color: #306230;
+    border: #0f380f 3px solid;
+}
