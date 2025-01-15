@@ -14,24 +14,14 @@ html, body {
     overflow: hidden;
 }
 
-/* Title */
+/* Screen */
 
-.logo {
+.screen {
     position: absolute;
-    width: 150px;
-    height: 150px;
-    bottom: 50%;
-}
-
-#prompt {
-    position: absolute;
-    color: #0f380f;
-    width: 180px;
-    height: 15px;
-    text-align: center;
-    text-transform: capitalize;
-    font-size: 12px;
-    bottom: 45%;
+    width: 200px;
+    height: 200px;
+    bottom: 46%;
+    display: block;
 }
 
 /* Scoreboard */
@@ -102,12 +92,12 @@ html, body {
 
 .arrows > img, 
 .arrows2 > img {
-    width: 60px;
+    width: 65px;
     cursor: pointer;
 }
 
 .btns > img {
-    width: 72px;
+    width: 75px;
     cursor: pointer;
 }
 
@@ -127,7 +117,17 @@ html, body {
 
 .snake {
     background-color: #0f380f;
-    border: #0f380f 1px dotted;
+    border: #306230 1px dotted;
+}
+
+.snake2 {
+    background-color: pink;
+    border: #306230 2px groove;
+}
+
+.snake3 {
+    background-color: #0f380f;
+    border: #306230 4px groove;
 }
 
 .food {
