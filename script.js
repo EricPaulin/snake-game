@@ -14,11 +14,20 @@ const arrow_right = document.querySelector(".arrow4")
 const button_b = document.querySelector(".btn1")
 const button_a = document.querySelector(".btn2")
 
-/* characters */
-let fangUnlock = false
-let zigUnlock = false
-
 document.addEventListener('keydown', handleKeyPress)
+
+class Snake {
+    constructor (name, delay, foodValue) {
+        this.name = name
+        this.delay = delay
+        this.foodValue = foodValue
+    }
+}
+
+/* Characters */
+const ace = new Snake("ace", 200, 10)
+const fang = new Snake("fang", 300, 20)
+const zig = new Snake("zig", 120, 30)
 
 // define game variables
 const gridSize = 20
@@ -26,16 +35,18 @@ let snake = [{ x: 10, y: 10 }]
 let food = generatePostion()
 
 let snakeDirection = ''
-let gameSpeedDelay = 200
 let currScore = 0
 
 let gameStarted = false
 let selectScreen = false
 let gameOverScreen = false
 
-let aceSelected = false
-let fangSelected = false
-let zigSelected = false
+let currSnake = ''
+
+/* characters */
+let fangUnlock = false
+let zigUnlock = false
+
 
 /* localStorage() */
 let highScore = localStorage.getItem('highScore')
@@ -46,7 +57,6 @@ else {
     parseInt(highScore)
     highScoreText.textContent = "HI:" + highScore.toString().padStart(3, '0')
     highScoreText.style.display = 'block'
-    //console.log(highScore)
 
     // check if character unlocked
     if (highScore >= 550) {
@@ -58,28 +68,6 @@ else {
     }
 }
 
-//highScore = 550
-
-/*
-    TODDO
-    - fix gameSpeedDelay
-    - fix character colors
-    - new Title Screen + Name
-    - snek game soundtrack (4 tracks: title, 3 characters)
-
-
-    CHARACTERS
-    - Fang (original - noraml mode) (click A)
-        - delay 200
-        - currScore = (snake.length - 1) * 10
-    - Ace (veteran snake - easy mode) 300 POINTS (click B)
-        - delay 250
-        - currScore = (snake.length - 1) * 20
-    - Noodle (worm - hard mode) 550 POINTS (click UP)
-        - delay 100
-        - currScore = (snake.length - 1) * 30
-*/
-
 /* intial game setup */
 function draw() {
     gameBoard.innerHTML = ''
@@ -90,7 +78,8 @@ function draw() {
 
 function drawSnake() {
     snake.forEach((segment) => {
-        const snakeElement = createGameElement('div', 'snake')
+        const snakeElement = createGameElement('div', currSnake.name)
+
         // edit position of the snake
         setPositon(snakeElement, segment)
         gameBoard.appendChild(snakeElement)     
@@ -157,7 +146,7 @@ function move() {
             move()
             checkCollision()
             draw()
-        }, gameSpeedDelay)
+        }, currSnake.delay)
     }
 
     // remove last position (so snake doesn't grow)
@@ -173,10 +162,10 @@ function selectCharacter() {
     selectScreen = true
 
     // screen corresponds to users high score
-    if (highScore >= 550) {
+    if (zigUnlock) {
         screen.src = './images/char-select3.gif';
     }
-    else if (highScore >= 300) {
+    else if (fangUnlock) {
         screen.src = './images/char-select2.gif';
     }
     else {
@@ -185,6 +174,11 @@ function selectCharacter() {
 }
 
 function startGame() {
+    /* checking characters */
+    //console.log(`${currSnake.name}`)
+    //console.log(`Delay: ${currSnake.delay}`)
+    //console.log(`Food Value: ${currSnake.foodValue}`)
+
     // keep track of running game
     gameStarted = true
 
@@ -196,7 +190,7 @@ function startGame() {
         move()
         checkCollision()
         draw()
-    }, gameSpeedDelay)
+    }, currSnake.delay)
 }
 
 /* Controls + Contoller */
@@ -210,7 +204,7 @@ button_a.addEventListener('click', () => {
 
     // start game as Ace
     if (selectScreen) {
-        aceSelected = true
+        currSnake = ace
         startGame()
     }
 
@@ -223,8 +217,8 @@ button_a.addEventListener('click', () => {
 button_b.addEventListener('click', () => {
 
     // makes sure Fang can be selected
-    if (selectScreen && (highScore >= 300)) {
-        fangSelected = true
+    if (selectScreen && (fangUnlock)) {
+        currSnake = fang
         startGame()
     }
 })
@@ -235,8 +229,8 @@ arrow_up.addEventListener('click', () => {
     }
 
     // make sure Zig can be selected
-    else if (selectScreen && (highScore >= 550)) {
-        zigSelected = true
+    else if (selectScreen && (zigUnlock)) {
+        currSnake = zig
         startGame()
     }
 })
@@ -246,20 +240,20 @@ function handleKeyPress(e) {
     if (selectScreen) {
         // Select Ace
         if (e.key === 'a') {
-            aceSelected = true
+            currSnake = ace
             startGame()
         }
 
         // Select Fang
         if (e.key === 'b') {
-            fangSelected = true
+            currSnake = fang
             startGame()
         }
 
         // Select Zig
         if (e.key === 'ArrowUp') {
-            if (selectScreen && (highScore >= 550)) {
-                zigSelected = true
+            if (selectScreen && (zigUnlock)) {
+                currSnake = zig
                 startGame()
             }
         }
@@ -309,7 +303,6 @@ function checkCollision() {
             return
         }
 
-        /* FIX THIS */
         // Food -> Generate new Postition till no Collision
         if (food.x === snake[i].x && food.y === snake[i].y) {
             food = generatePostion()
@@ -319,20 +312,25 @@ function checkCollision() {
 }
 
 function increaseSpeed() {
-    console.log(gameSpeedDelay)
-    
-    if (gameSpeedDelay > 220) {
-        gameSpeedDelay -= 7
+
+    if (currSnake == ace) {
+        currSnake.delay -= 5
     }
-    else if (gameSpeedDelay > 150) {
-        gameSpeedDelay -= 5
+
+    else if (currSnake == fang) {
+        if (currSnake.delay > 150) {
+            currSnake.delay -= 10
+        }
     }
-    else if (gameSpeedDelay > 100) {
-        gameSpeedDelay -= 3
+
+    else if (currSnake == zig) {
+        if (currSnake.delay > 100) {
+            currSnake.delay -= 2
+        }
     }
-    else if (gameSpeedDelay > 50) {
-        gameSpeedDelay -= 2
-    }
+
+    // test speed
+    //console.log(currSnake.delay)
 }
 
 
@@ -343,7 +341,6 @@ function resetGame() {
     snake = [{ x: 10, y: 10 }]
     food = generatePostion()
     snakeDirection = 'right'
-    gameSpeedDelay = 200
     updateScore()
 }
 
@@ -352,15 +349,13 @@ function stopGame() {
     gameStarted = false
     gameOverScreen = true
 
-    aceSelected, fangSelected, zigSelected = false
-
     // display Game Over Screen
     screen.style.display = 'block'
     screen.src = "./images/game-over.gif"
 
     // return to title   
     setTimeout(() => {
-        screen.src = "./images/snake-logo.png"
+        screen.src = "./images/snake-logo.gif"
         gameOverScreen = false
     }, 5500)
 }
@@ -368,16 +363,7 @@ function stopGame() {
 
 /* Score Functions */
 function updateScore() {
-    if (aceSelected) {
-        currScore = (snake.length - 1) * 10
-    }
-    else if (fangSelected) {
-        currScore = (snake.length - 1) * 20
-    }
-    else if (zigSelected) {
-        currScore = (snake.length - 1) * 30
-    }
-    
+    currScore = (snake.length - 1) * currSnake.foodValue
     // make score appear larger
     score.textContent = currScore.toString().padStart(3, '0')
 }
@@ -387,7 +373,7 @@ function updateHighScore() {
     if (currScore == 0) {
         return
     }
-
+    
     // replace high score
     if (currScore > highScore) {
         highScore = currScore

@@ -115,22 +115,22 @@ html, body {
 
 /* Snake */
 
-.snake {
+.ace {
     background-color: #0f380f;
     border: #306230 1px dotted;
 }
 
-.snake2 {
-    background-color: pink;
-    border: #306230 2px groove;
+.fang {
+    background-color: #306230;
+    border: #0f380f 3px dashed;
 }
 
-.snake3 {
-    background-color: #0f380f;
-    border: #306230 4px groove;
+.zig {
+    background-color: #8bac0f;
+    border: #306230 1px ridge;
 }
 
 .food {
-    background-color: #306230;
-    border: #0f380f 3px solid;
+    background-color: #0f380f;
+    border: #306230 3px solid;
 }
