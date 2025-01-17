@@ -25,9 +25,9 @@ class Snake {
 }
 
 /* Characters */
-const ace = new Snake("ace", 200, 10)
-const fang = new Snake("fang", 300, 20)
-const zig = new Snake("zig", 120, 30)
+const ace = new Snake("ace", 250, 10)
+const fang = new Snake("fang", 320, 20)
+const zig = new Snake("zig", 150, 30)
 
 // define game variables
 const gridSize = 20
@@ -67,6 +67,7 @@ else {
         fangUnlock = true
     }
 }
+
 
 /* intial game setup */
 function draw() {
@@ -318,13 +319,13 @@ function increaseSpeed() {
     }
 
     else if (currSnake == fang) {
-        if (currSnake.delay > 150) {
+        if (currSnake.delay > 200) {
             currSnake.delay -= 10
         }
     }
 
     else if (currSnake == zig) {
-        if (currSnake.delay > 100) {
+        if (currSnake.delay > 120) {
             currSnake.delay -= 2
         }
     }
