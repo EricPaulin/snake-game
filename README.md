@@ -3,12 +3,14 @@
 </div>
 
 <p>
-Snake Game in the style of the original Gameboy. Made using only HTML,CSS, and JavaScript. Textures made using Aseprite and color palette is the same as original gameboy. Made iun a week to better understand class and objects in Javascript as well as practice using the language. Also made to learn pixel art and mobile first design. Thank you anyone who plays it.
+Snake Game in the style of the original Gameboy. Made using only HTML, CSS, and JavaScript. Textures made using Aseprite and color palette is the same as original gameboy. Made in a week to better understand classees and objects in Javascript, learn game design basics, pixel art and animation, and to practice mobile first design. Thank you anyone who plays.
 </p>
  
  # FEATURES
  - Gameplay Loop
- - Responsive Design
- - Retro UI
- - Unlockable Characters
  - localStorage()
+ - Responsive Design
+ - Unlockable Characters
+ - Retro UI + Custom Sprites
+
+
