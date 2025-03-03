@@ -17,7 +17,7 @@ const button_a = document.querySelector(".btn2")
 document.addEventListener('keydown', handleKeyPress)
 
 class Snake {
-    constructor (name, delay, foodValue) {
+    constructor(name, delay, foodValue) {
         this.name = name
         this.delay = delay
         this.foodValue = foodValue
@@ -83,7 +83,7 @@ function drawSnake() {
 
         // edit position of the snake
         setPositon(snakeElement, segment)
-        gameBoard.appendChild(snakeElement)     
+        gameBoard.appendChild(snakeElement)
     })
 }
 
@@ -374,7 +374,7 @@ function updateHighScore() {
     if (currScore == 0) {
         return
     }
-    
+
     // replace high score
     if (currScore > highScore) {
         highScore = currScore

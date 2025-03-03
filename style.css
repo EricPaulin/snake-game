@@ -14,6 +14,11 @@ html, body {
     overflow: hidden;
 }
 
+/* prevent touch zoom on mobile */ 
+img.controlBtn {
+    touch-action: manipulation;
+}
+
 /* Screen */
 
 .screen {
