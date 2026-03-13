@@ -1,16 +1,6 @@
-// Inside game-logic.ts
 import { ace, fang, zig, Snake, Coordinates } from './characters.js';
 import { gameBoard, score, highScoreText, userScreen, drawSnake, drawFood } from './display.js';
-
-/* Controller */
-const arrow_left = document.querySelector(".arrow1")!;
-const arrow_up = document.querySelector(".arrow2")!;
-const arrow_down = document.querySelector(".arrow3")!;
-const arrow_right = document.querySelector(".arrow4")!;
-const button_b = document.querySelector(".btn1")!;
-const button_a = document.querySelector(".btn2")!;
-
-document.addEventListener('keydown', handleKeyPress);
+import { Controller } from './controls.js';
 
 /* Game Variables */
 let gameInterval: number | undefined;
@@ -21,9 +11,9 @@ let food: Coordinates = generatePosition();
 let snakeDirection = "";
 let currScore = 0;
 
-let gameStarted = false;
-let selectScreen = false;
-let gameOverScreen = false;
+// State Machines for Game Screens
+type GameState = 'START' | 'SELECT' | 'PLAY' | 'GAME_OVER';
+let currState: GameState = 'START';
 
 // Set Ace as Default Snake
 let currSnake: Snake = ace;
@@ -38,7 +28,7 @@ checkUnlocks();
 function draw() {
     gameBoard.innerHTML = "";
     drawSnake(snake, currSnake);
-    drawFood(gameStarted, food);
+    drawFood(currState === 'PLAY', food);
     updateScore();
 }
 
@@ -53,23 +43,12 @@ function move() {
     const snakeHead = { ...snake[0] };
 
     switch (snakeDirection) {
-        case 'up':
-            snakeHead.y--
-            break;
-        case 'down':
-            snakeHead.y++
-            break;
-        case 'left':
-            snakeHead.x--
-            break;
-        case 'right':
-            snakeHead.x++
-            break;
-        default:
-            break;
+        case 'up': snakeHead.y--; break;
+        case 'down': snakeHead.y++; break;
+        case 'left': snakeHead.x--; break;
+        case 'right': snakeHead.x++; break;
     }
     snake.unshift(snakeHead);
-
 
     // snake and food on same coordinate position
     if (snakeHead.x == food.x && snakeHead.y == food.y) {
@@ -85,20 +64,17 @@ function move() {
             draw();
         }, currSnake.delay)
     }
-
     // remove last position (so snake doesn't grow)
     else {
         snake.pop();
     }
 }
 
-// screen select
-function selectCharacter() {
+/* SCREENS */
+// Select Screen
+export function selectCharacter() {
+    currState = 'SELECT';
 
-    // change screen
-    selectScreen = true;
-
-    // screen corresponds to users high score
     if (zig.unlocked) {
         userScreen.src = './images/char-select3.gif';
     }
@@ -110,22 +86,12 @@ function selectCharacter() {
     }
 }
 
+// Play Screen
+export function startGame() {
+    currState = 'PLAY';
 
-function startGame() {
-    /* test: checking characters */
-    //console.log(`${currSnake.name}`)
-    //console.log(`Delay: ${currSnake.delay}`)
-    //console.log(`Food Value: ${currSnake.foodValue}`)
-
-
-    // keep track of running game
-    gameStarted = true;
-
-
-    // remove select screen
-    selectScreen = false;
+    // hide the overlay/select screen
     userScreen.style.display = 'none';
-
 
     gameInterval = setInterval(() => {
         move();
@@ -134,96 +100,20 @@ function startGame() {
     }, currSnake.delay)
 }
 
-/* Controls & Controller */
-arrow_up.addEventListener('click', () => { snakeDirection = 'up' });
-arrow_down.addEventListener('click', () => { snakeDirection = 'down' });
-arrow_left.addEventListener('click', () => { snakeDirection = 'left' });
-arrow_right.addEventListener('click', () => { snakeDirection = 'right' });
+// Game Over + Title Screen
+function stopGame() {
+    // Game Over
+    clearInterval(gameInterval);
+    currState = 'GAME_OVER';
 
+    userScreen.style.display = 'block';
+    userScreen.src = "./images/game-over.gif";
 
-button_a.addEventListener('click', () => {
-    // start game as Ace
-    if (selectScreen) {
-        currSnake = ace;
-        startGame();
-    }
-
-    // prevent error from prev game
-    else if (!gameStarted && !gameOverScreen) {
-        selectCharacter()
-    }
-})
-
-
-button_b.addEventListener('click', () => {
-    // makes sure Fang can be selected
-    if (selectScreen && (fang.unlocked)) {
-        currSnake = fang;
-        startGame();
-    }
-})
-
-
-arrow_up.addEventListener('click', () => {
-    if (gameStarted) {
-        return;
-    }
-    // make sure Zig can be selected
-    else if (selectScreen && (zig.unlocked)) {
-        currSnake = zig;
-        startGame();
-    }
-})
-
-function handleKeyPress(e: KeyboardEvent) {
-    // on Select Screen
-    if (selectScreen) {
-        // Select Ace
-        if (e.key === 'a') {
-            currSnake = ace;
-            startGame();
-            return;
-        }
-
-
-        // Select Fang
-        if (e.key === 'b' && fang.unlocked) {
-            currSnake = fang;
-            startGame();
-            return;
-        }
-
-        // Select Zig
-        if (e.key === 'ArrowUp' && zig.unlocked) {
-            currSnake = zig;
-            startGame();
-            return;
-
-        }
-    }
-
-    // on Start Screen
-    else if ((!gameStarted && !gameOverScreen && e.key === 'a')) {
-        selectCharacter()
-    }
-
-    // in Game (controlling snake)
-    else if (gameStarted) {
-        switch (e.key) {
-            case 'ArrowUp':
-                snakeDirection = 'up'
-                break
-            case 'ArrowDown':
-                snakeDirection = 'down'
-                break
-            case 'ArrowLeft':
-                snakeDirection = 'left'
-                break
-            case 'ArrowRight':
-                snakeDirection = 'right'
-                break
-        }
-    }
+    // Title
+    setTimeout(() => {
+        userScreen.src = "./images/snake-logo.gif";
+        currState = 'START';
+    }, 5500)
 }
 
 /* Gameplay Features */
@@ -287,23 +177,6 @@ function resetGame() {
     updateScore();
 }
 
-function stopGame() {
-    clearInterval(gameInterval);
-    gameStarted = false;
-    gameOverScreen = true;
-
-    // display Game Over Screen
-    userScreen.style.display = 'block';
-    userScreen.src = "./images/game-over.gif";
-
-    // return to title  
-    setTimeout(() => {
-        userScreen.src = "./images/snake-logo.gif";
-        gameOverScreen = false;
-    }, 5500)
-}
-
-
 /* Score Functions */
 function updateScore(): void {
     currScore = (snake.length - 1) * currSnake.foodValue;
@@ -327,11 +200,6 @@ function checkUnlocks() {
 }
 
 function updateHighScore() {
-    if (currScore == 0) {
-        return;
-    }
-
-    // updates high score + checks if character unlocked
     if (currScore > highScore) {
         highScore = currScore;
         localStorage.setItem('highScore', highScore.toString());
@@ -341,3 +209,11 @@ function updateHighScore() {
     }
     highScoreText.style.display = 'block';
 }
+
+// Export to Controller
+export function getCurrState() { return currState; }
+export function setCurrSnake(snake: Snake) { currSnake = snake; }
+export function setSnakeDirection(dir: string) { snakeDirection = dir; }
+
+// Get Controller
+Controller();
