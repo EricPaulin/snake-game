@@ -1,8 +1,10 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["DOM", "ES2017"],
-    "strict": true,
-    "noImplicitAny": false
+  "compilerOptions": {          /* INFO WHAT WHAT HAPPENS ON COMPILE */
+    "rootDir": "./src",         // location of the ts code
+    "outDir": "./dist",         // location compiled js goes
+    "target": "ES2017",         // using newer es functions (padStart) + es module support
+    "module": "ESNext",         // needed b/c splitting code into multiple files
+    "lib": ["DOM", "ES2017"],   // tells ts which features it should recognize
+    "strict": true              // type safety
   }
 }
