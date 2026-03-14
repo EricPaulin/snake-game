@@ -51,7 +51,7 @@ This is an open source snake game clone. Because of this you're free to use and 
 <br>
 
 <div align="center">
- <img src="./images/state-machine.png" width="800">
+ <img src="./images/state-machine.png" width="600">
  <p><i>Finite State Machine for menu transitions and gameplay states.</i></p>
 </div>
 
