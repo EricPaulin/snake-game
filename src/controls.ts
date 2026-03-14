@@ -1,5 +1,5 @@
-import { Snake, ace, fang, zig } from './characters.js';
-import { setSnakeDirection, startGame, selectCharacter, getCurrState, setCurrSnake } from './game-logic.js';
+import { ace, fang, zig } from './characters.js';
+import { setSnakeDirection, startGame, selectCharacter, getCurrState, setCurrSnake, showMenu, showRules, showControls } from './game-logic.js';
 
 /* Controller Elements */
 const arrow_left = document.querySelector(".arrow1")!;
@@ -19,7 +19,18 @@ export function Controller() {
 
         switch (currState) {
             case 'START':
+                if (key === 'a') showMenu();
+                break;
+
+            case 'MENU':
                 if (key === 'a') selectCharacter();
+                if (key === 'b') showRules();
+                if (key === 'arrowup' || key === 'w') showControls();
+                break;
+
+            case 'RULES':
+            case 'CONTROLS':
+                if (key === 'b') showMenu();
                 break;
 
             case 'SELECT':
@@ -43,20 +54,36 @@ export function Controller() {
     /* BUTTON */
     button_a.addEventListener('click', () => {
         const currState = getCurrState();
-        if (currState === 'SELECT') { setCurrSnake(ace); startGame(); }
-        else if (currState === 'START') selectCharacter();
+        if (currState === 'START') {
+            showMenu();
+        }
+        else if (currState === 'MENU') {
+            selectCharacter();
+        }
+        else if (currState === 'SELECT') {
+            setCurrSnake(ace);
+            startGame();
+        }
     });
 
     button_b.addEventListener('click', () => {
-        if (getCurrState() === 'SELECT' && fang.unlocked) {
-            setCurrSnake(fang);
-            startGame();
+        const currState = getCurrState();
+        if (currState === 'MENU') {
+            showRules();
+        }
+        else if (['RULES', 'CONTROLS'].includes(currState)) {
+            showMenu();
         }
     });
 
     arrow_up.addEventListener('click', () => {
         const currState = getCurrState();
-        if (currState === 'PLAY') setSnakeDirection('up');
+        if (currState === 'MENU') {
+            showControls();
+        }
+        else if (currState === 'PLAY') {
+            setSnakeDirection('up');
+        }
         else if (currState === 'SELECT' && zig.unlocked) {
             setCurrSnake(zig);
             startGame();

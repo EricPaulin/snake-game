@@ -23,9 +23,16 @@ export function drawSnake(snake, currSnake) {
     });
 }
 export function drawFood(gameStarted, food) {
-    if (gameStarted === true) {
+    if (gameStarted) {
         const foodElement = createGameElement('div', 'food');
         setPosition(foodElement, food);
         gameBoard.appendChild(foodElement);
+    }
+}
+export function drawPoisonFood(gameStarted, position) {
+    if (gameStarted) {
+        const poisonFood = createGameElement('div', 'poison-food');
+        setPosition(poisonFood, position);
+        gameBoard.appendChild(poisonFood);
     }
 }

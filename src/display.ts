@@ -29,11 +29,20 @@ export function drawSnake(snake: Coordinates[], currSnake: Snake) {    snake.for
     })
 }
 
-export function drawFood(gameStarted: boolean, food: Coordinates) {    // only generate food when game begins
-    if (gameStarted === true) {
+export function drawFood(gameStarted: boolean, food: Coordinates) {
+    if (gameStarted) {
         const foodElement = createGameElement('div', 'food');
 
         setPosition(foodElement, food);
         gameBoard.appendChild(foodElement);
+    }
+}
+
+export function drawPoisonFood(gameStarted: boolean, position: Coordinates) {
+    if (gameStarted) {
+        const poisonFood = createGameElement('div', 'poison-food');
+        
+        setPosition(poisonFood, position);
+        gameBoard.appendChild(poisonFood);
     }
 }

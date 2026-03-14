@@ -1,18 +1,19 @@
 import { ace, fang, zig, Snake, Coordinates } from './characters.js';
-import { gameBoard, score, highScoreText, userScreen, drawSnake, drawFood } from './display.js';
+import { gameBoard, score, highScoreText, userScreen, drawSnake, drawFood, drawPoisonFood } from './display.js';
 import { Controller } from './controls.js';
 
 /* Game Variables */
 let gameInterval: number | undefined;
 const gridSize = 20;
 let snake: Coordinates[] = [{ x: 10, y: 20 }];
-let food: Coordinates = generatePosition();
+let food: Coordinates; 
+let poisonFood: Coordinates;
 
 let snakeDirection = "";
 let currScore = 0;
 
 // State Machines for Game Screens
-type GameState = 'START' | 'SELECT' | 'PLAY' | 'GAME_OVER';
+type GameState = 'START' | 'MENU' | 'RULES' | 'CONTROLS' | 'SELECT' | 'PLAY' | 'GAME_OVER';
 let currState: GameState = 'START';
 
 // Set Ace as Default Snake
@@ -29,12 +30,21 @@ function draw() {
     gameBoard.innerHTML = "";
     drawSnake(snake, currSnake);
     drawFood(currState === 'PLAY', food);
+    drawPoisonFood(currState === 'PLAY', poisonFood);
     updateScore();
 }
 
-function generatePosition() {
-    const x = Math.floor(Math.random() * gridSize) + 1;
-    const y = Math.floor(Math.random() * gridSize) + 1;
+// Makes Sure Food + Poison + Snake don't Overlap
+function generatePosition(): Coordinates {
+    let x = Math.floor(Math.random() * gridSize) + 1;
+    let y = Math.floor(Math.random() * gridSize) + 1;
+
+    // If the snake exists, make sure we didn't land on it
+    if (snake) {
+        const hitsSnake = snake.some(s => s.x === x && s.y === y);
+        if (hitsSnake) return generatePosition(); // Try again
+    }
+
     return { x, y };
 }
 
@@ -50,28 +60,75 @@ function move() {
     }
     snake.unshift(snakeHead);
 
-    // snake and food on same coordinate position
-    if (snakeHead.x == food.x && snakeHead.y == food.y) {
+    // 1. Food + Snake
+    if (snakeHead.x === food.x && snakeHead.y === food.y) {
         food = generatePosition();
         increaseSpeed();
 
         // prevents super speed up
         clearInterval(gameInterval);
-
         gameInterval = setInterval(() => {
             move();
             checkCollision();
             draw();
         }, currSnake.delay)
     }
-    // remove last position (so snake doesn't grow)
+
+    // 2. Poison Food + Snake
+    else if (snakeHead.x === poisonFood.x && snakeHead.y === poisonFood.y) {
+        // lose 30 points, but cannot go lower than 0
+        currScore = Math.max(0, currScore - 30);
+        poisonFood = generatePosition();
+
+        // Only Head = Dead
+        if (snake.length <= 2) {
+            resetGame();
+            return;
+        }
+
+        // Pop to cancel out unshift (regular movement)
+        snake.pop();
+        // Pop that shrinks snake
+        if (snake.length > 1) {
+            snake.pop();
+        }
+
+        // update UI for score/shrink
+        clearInterval(gameInterval);
+        gameInterval = setInterval(() => {
+            move();
+            checkCollision();
+            draw();
+        }, currSnake.delay);
+    }
+
+    // 3. Regular Movement
     else {
         snake.pop();
     }
 }
 
 /* SCREENS */
-// Select Screen
+export function showStart() {
+    currState = 'START';
+    userScreen.src = "./images/snake-logo.gif";
+}
+
+export function showMenu() {
+    currState = 'MENU';
+    userScreen.src = "./images/menu.gif";
+}
+
+export function showRules() {
+    currState = 'RULES';
+    userScreen.src = "./images/rules.gif";
+}
+
+export function showControls() {
+    currState = 'CONTROLS';
+    userScreen.src = "./images/controls.gif";
+}
+
 export function selectCharacter() {
     currState = 'SELECT';
 
@@ -86,9 +143,11 @@ export function selectCharacter() {
     }
 }
 
-// Play Screen
 export function startGame() {
     currState = 'PLAY';
+
+    food = generatePosition();
+    poisonFood = generatePosition();
 
     // hide the overlay/select screen
     userScreen.style.display = 'none';
@@ -109,11 +168,10 @@ function stopGame() {
     userScreen.style.display = 'block';
     userScreen.src = "./images/game-over.gif";
 
-    // Title
+    // Return to Title Screen (5.5s)
     setTimeout(() => {
-        userScreen.src = "./images/snake-logo.gif";
-        currState = 'START';
-    }, 5500)
+        showStart();
+    }, 5500);
 }
 
 /* Gameplay Features */
