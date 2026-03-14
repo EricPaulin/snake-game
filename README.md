@@ -10,7 +10,9 @@
 <p align="justify"> 
 Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eating apples. I wanted to make my own version that was responsive and used the original Game Boy’s color palette so when you played it on a phone it emulated the look of playing on an original Game Boy. The original version was made using HTML, CSS, and JavaScript but has more recently moved to TypeScript. All pixel art and animations were made using Aseprite. The gameplay loop is the classic snake formula of eating apples, raising your score, and avoiding the walls of death. To make it more fun I added poison apples that damage / kill the player and lower their score, but also three playable characters (two need to be unlocked via a high score) with different stats and designs to keep the game fun.
 </p>
- 
+
+<br>
+
 ## FEATURES
  - Snake Gameplay Loop (eat, grow)
  - Local Storage (saves high score + unlocked characters)
@@ -21,12 +23,16 @@ Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eati
 
 <b>Core Concepts:</b> ESModules, Queues, System Architecture, Game Logic, Color Theory, Pixel Art, Animation, UI/UX, State Machines, Open Source
 
+<br>
+
 ## Local Development
 This is an open source snake game clone. Because of this you're free to use and modify it as you please. To get the code running locally on your own machine using Visual Studio Code you just need to do the following steps:
-1. Clone the Repository.
-2. Install TypeScript globally: `npm install -g typescript`.
-3. Start the compiler (in watch mode): `tsc -w`.
-4. Launch the local server using the **Live Server** extension via Visual Studio Code.
+1. Clone the Repository
+2. Install TypeScript globally: `npm install -g typescript`
+3. Start the compiler (in watch mode): `tsc -w`
+4. Launch the local server using the **Live Server** extension via Visual Studio Code
+
+<br>
 
 ## Changelog
 #### Version 1.0
@@ -42,6 +48,14 @@ This is an open source snake game clone. Because of this you're free to use and 
 - State Machine added for Screens
 - Bug Fixes
 
+<br>
+
+<div align="center">
+ <img src="./images/state-machine.png" width="800">
+ <p><i>Finite State Machine for menu transitions and gameplay states.</i></p>
+</div>
+
+<br>
 
 ## Challenges and Solutions
 <p align="justify">
