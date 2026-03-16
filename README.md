@@ -26,7 +26,7 @@ Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eati
 <br>
 
 ## FEATURES
- - Snake Gameplay Loop (eat, grow)
+ - Classic Snake Gameplay (eat, grow, die)
  - Local Storage (saves high score + unlocked characters)
  - Retro UI, Custom Sprites + Animation
  - Unlockable Characters
@@ -49,8 +49,8 @@ This is an open source snake game clone. Because of this you're free to use and 
 ## Changelog
 #### Version 1.0
 - Classic Snake Gameplay
-- 3 Unlockable Characters
-- Local Storage (saves)
+- 3 Playable Characters
+- Local Storage (saves game)
 
 #### Version 1.1 (Current Version)
 - MENU, RULES, and CONTROLS screens added
@@ -70,5 +70,5 @@ This is an open source snake game clone. Because of this you're free to use and 
 
 ## Challenges and Solutions
 <p align="justify">
-The original build of 'Snake' was seeing if I could build a snake game clone in a week. It was a thrill to do and I learned a lot about how web-based browser games work and how to make them responsive (UI and controls). This time around (a year later) I wanted to see how much I've grown as a developer by updating its codebase and focusing more on its system architecture to make it easily scalable for open source usage. The first big thing I wanted to do was move the codebase away from JavaScript and make it entirely TypeScript for static typing but also so I could use unions to make State Machines revolving around the different screens the user sees. I also liked how lightweight the original was, so I kept it vanilla and didn't add any external frameworks and relied purely on the core features of ESModules and TypeScript. This was a bit of a learning curve for me, but the official TypeScript documentation helped me out a ton. In the process of converting my code I also realized how bloated and unreadable the entire thing was, so I decoupled it into multiple files consisting of their core functionality (display, controls, game-logic, and characters) and added comments for further readability. Finally I wanted to add a new gameplay feature because I felt the game could be more fun, but also I wanted to test firsthand if my new code architecture was more cohesive and easier to use than my old one. I decided to add two things: new screens and the poison apple. The new screens were added to see if using unions as a state machine was as seamless as I thought. I also added screens because I felt the original lacked any direction, so adding a main menu with rules and controls made for a better user experience. Finally the poison apple was added to expand on the queue data structure logic and as a new obstacle for the player to make the game more exciting.
+The original build of 'Snake' was seeing if I could build a snake game clone in a week. It was a thrill to do and I learned a lot about how web-based browser games work and how to make them responsive (UI and controls). This time around (a year later) I wanted to see how much I've grown as a developer by updating its codebase and focusing more on its system architecture to make it easily scalable for open source usage. The first big thing I wanted to do was move the codebase away from JavaScript and make it entirely TypeScript for static typing but also so I could use unions to make State Machines revolving around the different screens the user sees. I also liked how lightweight the original was, so I kept it vanilla and didn't add any external frameworks and relied purely on the core features of ESModules and TypeScript. This was a bit of a learning curve for me, but the official TypeScript documentation helped me out a ton. In the process of converting my code I also realized how bloated and unreadable the entire thing was, so I decoupled it into multiple files consisting of their core functionality (display, controls, game-logic, and characters) and added comments for further readability. Finally I wanted to add a new gameplay feature because I felt the game could be more fun, but also I wanted to test firsthand if my new code architecture was more cohesive and easier to use than my old one. I decided to add two things: new screens and the poison apple. The new screens were added to see if using unions as a state machine was as seamless as I thought. I also added screens because I felt the original lacked any direction, so adding a main menu with rules and controls made for a better user experience. Finally poison apples were added to expand on the queue data structure logic and as a new obstacle for the player to make the game more exciting.
 </p>
