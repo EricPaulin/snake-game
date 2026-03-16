@@ -8,8 +8,20 @@
 <br>
 
 <p align="justify"> 
-Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eating apples. I wanted to make my own version that was responsive and used the original Game Boy’s color palette so when you played it on a phone it emulated the look of playing on an original Game Boy. The original version was made using HTML, CSS, and JavaScript but has more recently moved to TypeScript. All pixel art and animations were made using Aseprite. The gameplay loop is the classic snake formula of eating apples, raising your score, and avoiding the walls of death. To make it more fun I added poison apples that damage / kill the player and lower their score, but also three playable characters (two need to be unlocked via a high score) with different stats and designs to keep the game fun.
+Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eating apples. I wanted to make my own version that was responsive and used the original Game Boy’s color palette so when you played it on a phone it emulated the look of playing on an original Game Boy. Originally built in JavaScript, this new version has been refactored to TypeScript with all pixel art and animations being made in Aseprite. The gameplay is the classic snake formula of eating apples to grow, raising speeds and scores, and avoiding the walls of death. The game also includes three playable characters: Ace, Fang, and Zig (Fang and Zig need to be unlocked via a certain high score) and poison apples that damage / kill the player and lower their score.
 </p>
+
+<br>
+
+<div align="center">
+  <table>
+    <tr>
+      <td><img src="./images/portrait-ace.png" width="250"></td>
+      <td><img src="./images/portrait-fang.png" width="250"></td>
+      <td><img src="./images/portrait-zig.png" width="250"></td>
+    </tr>
+  </table>
+</div>
 
 <br>
 
@@ -36,7 +48,7 @@ This is an open source snake game clone. Because of this you're free to use and 
 
 ## Changelog
 #### Version 1.0
-- Core Gameplay Loop Established
+- Classic Snake Gameplay
 - 3 Unlockable Characters
 - Local Storage (saves)
 
@@ -46,7 +58,6 @@ This is an open source snake game clone. Because of this you're free to use and 
 - Transitioned Codebase from JavaScript to TypeScript + added Node.js
 - Moved from single script file to multiple ESModules (readability + decoupled architecture)
 - State Machine added for Screens
-- Bug Fixes
 
 <br>
 
