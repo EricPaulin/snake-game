@@ -31,7 +31,7 @@ Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eati
  - Retro UI, Custom Sprites + Animation
  - Unlockable Characters
 
-<b>Tech Stack:</b>  HTML, CSS, TypeScript, Node.js
+<b>Tech Stack:</b>  HTML, CSS, TypeScript
 
 <b>Core Concepts:</b> ESModules, Queues, System Architecture, Game Logic, Color Theory, Pixel Art, Animation, UI/UX, State Machines, Open Source
 
