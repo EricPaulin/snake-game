@@ -8,7 +8,7 @@
 <br>
 
 <p align="justify"> 
-Snake is a <b>Lightweight Vanilla TypeScript </b> game about a hungry snake eating apples. I wanted to make my own version that was responsive and used the original Game Boy’s color palette so when you played it on a phone it emulated the look of playing on an original Game Boy. Originally built in JavaScript, this new version has been refactored to TypeScript with all pixel art and animations being made in Aseprite. The gameplay is the classic snake formula of eating apples to grow, raising speeds and scores, and avoiding the walls of death. The game also includes three playable characters: Ace, Fang, and Zig (Fang and Zig need to be unlocked via a certain high score) and poison apples that damage / kill the player and lower their score.
+Snake is a <b>lightweight, vanilla TypeScript </b> game about a hungry snake eating apples. I wanted to make my own version that was responsive and used the original Game Boy’s color palette so when you played it on a phone it emulated the look of playing on an original Game Boy. Originally built in JavaScript, this new version has been refactored to TypeScript with all pixel art and animations being made in Aseprite. The gameplay is the classic snake formula of eating apples to grow, raising speeds and scores, and avoiding the walls of death. The game also includes three playable characters: Ace, Fang, and Zig (Fang and Zig need to be unlocked via a certain high score) and poison apples that damage / kill the player and lower their score.
 </p>
 
 <br>
